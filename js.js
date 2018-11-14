@@ -20,17 +20,11 @@ function printMessage(elemento){
     let nombre = elemento.getAttribute("nombre")
        
        if(isValid(elemento.value)){
-        swal({
-            title: "Se ha registrado con exito",
-            icon: "success"
-          });
+
        }
        else
        {
-        swal({
-            title: `El elemento ${nombre} No es valido`,
-            icon: "error"
-          });
+        toastr.error(`El campo ${nombre} esta vacio`)
        }
 }
 
