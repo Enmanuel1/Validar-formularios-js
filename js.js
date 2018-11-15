@@ -1,41 +1,75 @@
 'use strict'
-function verificarObjeto(id =  new Array()){
+
+let camposInput = []
+let camposSelect = []
+
+function VerifyInputs(id =  new Array()){
+   GetInputsId()
    id.forEach(e =>{
        let elemento = document.getElementById(e) 
-       printMessage(elemento)
+       let nombreDelCampo = elemento.getAttribute("nombre")
+       printMessageForInputs(elemento,nombreDelCampo)
    })
 }
 
-function isValid(elementValue){
-    let state;
+function VerifySelect(id = new Array()){
+    getSelectId()
+    id.forEach(e =>{
+        let elemento = document.getElementById(e) 
+        let nombreDelCampo = elemento.getAttribute("nombre")
+        PrintMessageForSelected(elemento, nombreDelCampo)
+    })
+}
+
+function InputIsValid(elementValue){
     if(elementValue.length > 0){
-        state = true;
+        return true
     }else{
-        state = false;
+        return false
     }
-    return state;
 }
 
-function printMessage(elemento){
-    let nombre = elemento.getAttribute("nombre")
-       
-       if(isValid(elemento.value)){
-
-       }
-       else
-       {
-        toastr.error(`El campo ${nombre} esta vacio`)
-       }
+function selectIsValid(elementId){
+    let valorDelElemento = document.getElementById(elementId).value
+    if(valorDelElemento > 0){
+        return true
+    }else{
+        return false
+    }
 }
 
-let campos = [
-                "exampleInputEmail1",
-                "exampleInputPassword1",
-                "exampleInputEmail2",
-                "exampleInputPassword2"
-            ]
+function printMessageForInputs(elemento, nombreDelCampo){
+    if(!InputIsValid(elemento.value)){
+        toastr.error(`El campo ${nombreDelCampo} esta vacio`)
+    }
+}
 
-document.getElementById("okgoogle").addEventListener("click",e=>{
+function PrintMessageForSelected(elemento, nombreDelCampo){
+    if(!selectIsValid(elemento.id)){
+        toastr.error(`El campo ${nombreDelCampo} esta vacio`)
+    }
+}
+
+function GetInputsId(){
+    let elementos = document.getElementsByTagName("input")
+    if(camposInput.length === 0 ){
+        for (let x = 0; x < elementos.length; x++) {
+            camposInput.push(elementos[x].id)
+        }
+    }
+}
+
+function getSelectId(){
+    let elementos = document.getElementsByTagName("select")
+    if(camposSelect.length === 0){
+        for(let x = 0; x < elementos.length; x++){
+            camposSelect.push(elementos[x].id)
+        }
+    }
+}
+
+document.getElementById("okgoogle").addEventListener("click", e =>{
     e.preventDefault()
-    verificarObjeto(campos)
+    VerifyInputs(camposInput)
+    VerifySelect(camposSelect)
 })
